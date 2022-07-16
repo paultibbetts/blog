@@ -1,0 +1,20 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  --at-apply: bg-night p-4 font-mono text-gray-400;
+}
+
+body {
+  line-height: 1.6;
+  transition: color 0.5s, background-color 0.5s;
+}
+
+body a {
+  --at-apply: text-purple-200 no-underline;
+}
+
+body a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,67 @@
+div[class*='language-'] {
+    position: relative;
+  }
+  
+  div[class*='language-']:after {
+    content: attr(data-lang);
+    color: white;
+    font-size: 0.8rem;
+    position: absolute;
+    right: 1em;
+    top: 0.6em;
+  }
+  
+  div[class*='language-'] pre {
+    padding: 1rem 1rem;
+  }
+  
+  pre.line-highlight,
+  pre.line-numbers {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    user-select: none;
+    overflow: hidden;
+  }
+  
+  .line-highlight > .highlighted {
+    background: rgba(139,233,253,0.1);
+  }
+  
+  pre.line-numbers {
+    border-right: 1px solid rgba(0,0,0,0.1);
+    text-align: center;
+    width: var(--gutter-width);
+  }
+  
+  /* Prism dracula fixes */
+  
+  code[class*='language-'],
+  pre[class*='language-'] {
+    line-height: 1.75; /* resets line height */
+  }
+  div[class*='language-'].line-numbers-mode pre[class*='language-'] {
+    padding-left: 4rem; /* puts line numbers back */
+  }
+
+  div[class*='language-'] pre.line-highlight {
+    padding: 1rem 0; /* fixes line-highlight padding */
+  }
+
+  /* Prism dracula diff colour fixes */
+
+  .token .token {
+	color: inherit;
+  }
+
+
+  .token.inserted {
+	--at-apply: text-green;
+  }
+
+  .token.deleted {
+	--at-apply: text-red;
+  }
