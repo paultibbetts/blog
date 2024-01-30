@@ -1,0 +1,437 @@
+---
+title: Blogging with îles
+date: 2022-08-30 21:23:00
+tags:
+    - îles
+    - javascript
+    - meta
+---
+
+Over the years I've played with a few different blogging systems.
+
+This time around I've got a few things I really want to write about, which is a good start, 
+and creative freedom, thanks to [îles](https://iles.pages.dev/).
+
+## îles
+
+îles calls itself 
+
+> "The Joyful Site Generator" 
+
+and I can't help but agree with that.
+
+It's powered by [Vite](https://vitejs.dev/) which works in milliseconds, 
+unlike Webpack, and support for [Vue](https://vuejs.org/) means I can write components 
+in the way that I like.
+
+It also comes with a bunch of features out of the box:
+
+- **Markdown Support** with [MDX](https://mdxjs.com/) so I can add Vue components to my posts
+- **Partial Hydration** so you don't need to use JavaScript to view the site
+- **Hot Module Replacement** so I can preview code changes without reloading
+- **Layouts** which saves time creating new pages
+- **Routing** based on files or dynamic or both
+- **Multi-Framework** support - but I'll mainly be using Vue
+
+It's [not the only static site generator with these features](https://iles.pages.dev/faqs#comparisons-%E2%9A%96%EF%B8%8F) 
+but so far I'm liking it.
+
+### Gridsome
+
+I've previously used [Gridsome](https://gridsome.org/).
+
+It's powered by Vue and lets you write content queries in [GraphQL](https://graphql.org/) but 
+there [seems to be no progress upgrading it to Vue 3](https://github.com/gridsome/gridsome/issues/1289#issuecomment-1172076274), 
+which is something I'd like to get familiar with, so it was time to look for something else.
+
+### Vuepress
+
+Version 2 of [Vuepress](https://v2.vuepress.vuejs.org/) lets you use Vue 3 but it's more 
+suited to documentation sites than blogs. 
+
+I _think_ I'd reach for Vuepress instead of îles if that's all I wanted, but this is a blog and
+I needed a bit more freedom to do some weird things.
+
+## Design
+
+Staring at my screen out of ideas, with the cursor flashing on and off, it hit me.
+
+The first weird thing I'd do was make my blog look like my terminal. 
+
+### Dracula
+
+A few years ago I started using the [Dracula theme](https://draculatheme.com/) for my 
+[code editor](https://draculatheme.com/visual-studio-code). 
+
+Then my [terminal](https://draculatheme.com/hyper). 
+
+Now even my [Slack](https://draculatheme.com/slack) is themed the same.
+
+So when I looked through the packages on the Dracula site and found a 
+[Tailwind plugin](https://draculatheme.com/tailwind) it solidified the idea.
+
+I wouldn't have to think about the design and I could import the colours straight into my CSS.
+
+### UnoCSS
+
+[UnoCSS](https://unocss.dev/) uses the [TailwindCSS](https://tailwindcss.com/) preset by default which means I can transfer my knowledge of 
+Tailwind and it's atomic CSS classes to UnoCSS and gain the benefit of 
+[faster build times](https://github.com/unocss/unocss#features) and some other new features.
+
+Importing the Dracula colours into UnoCSS looks like this:
+
+```ts
+// iles.config.ts
+import DraculaColors from 'tailwind-dracula/colors'
+
+export default defineConfig({
+    vite: {
+        plugins: [
+            UnoCSS({
+                theme: {
+                    colors: DraculaColors
+                },
+            })
+        ]
+    }
+})
+
+```
+
+and now I can write 
+
+```html
+<span class="text-red">things like this</span>
+```
+
+and it <span class="text-red">looks like this</span> which is the same 
+shade of red as all my other apps.
+
+You can also use vampire names like
+
+```html
+<span class="bg-buffy text-vanHelsing p-2 rounded">this</span>
+```
+<div class="mt-6">
+    <span class="bg-buffy text-vanHelsing-100 p-2 rounded mt-2">this</span>
+</div>
+
+or even write
+
+```html
+<p class="text-xl font-bold text-morbius">things like</p>
+```
+
+<p class="text-xl font-bold text-morbius">It's Morbin' time</p>
+
+like he said in that movie.
+
+### Sacrifices
+
+To be clear I know it's not an accurate reproduction of a console terminal.
+
+It's not even an accurate representation of the Dracula theme.
+
+I had to make a few changes for it to work on the web but I'm happy with how it's ended up.
+
+#### Background
+
+The first and most obvious difference to fellow Dracula theme fans is the background colour 
+is now better.
+
+`#181818` was there when I used the îles starter and it got there by being 
+in [vuejs/theme](https://github.com/vuejs/theme) and it got there by being 
+the best shade of background colour for dark themed sites.
+
+<p>
+    <img 
+        alt="Christian Bale from American Psycho nods in approval of the shade of black."
+        src="https://media.giphy.com/media/f4TjiCpNemSo8/giphy.gif" 
+        style="width:100%" 
+        class="rounded-lg" 
+    />
+</p>
+
+It was easy to add this to UnoCSS:
+
+
+```js
+// iles.config.ts
+...
+vite: {
+    plugins: [
+        Unocss({
+            theme: {
+                colors: {
+                    night: '#181818',
+                    ...DraculaColors
+                }
+            },
+        })
+    ]
+}
+```
+
+and because I also have the `transformerDirective` added to UnoCSS:
+
+```js
+// iles.config.ts
+import transformerDirective from '@unocss/transformer-directives'
+...
+vite: {
+    plugins: [
+        Unocss({
+            ...
+            transformers: [
+                transformerDirective(),
+            ]
+        })
+    ]
+}
+```
+
+I've applied it as the `body` background colour with:
+
+```css
+body {
+  --at-apply: bg-night;
+}
+```
+
+This makes the code blocks stand out more as they use the regular Dracula background colour.
+
+#### Terminal
+
+There's also been a few tweaks to how the terminal looks.
+
+##### Prompt
+
+I use [Hyper](https://hyper.is/) as my terminal with 
+[Zsh](https://ohmyz.sh/) as my shell and 
+[Spaceship](https://spaceship-prompt.sh/) as my prompt.
+
+This produces just the right amount of information for me when I'm working but it 
+would have been too much to use on the site:
+
+<div class="mb-4 font-mono">
+    <div class="mb-0">
+        <span class="text-cyan">blog</span>
+        <span class="text-white">on</span>
+        <span class="text-pink">main</span>
+        <span class="text-red">[?]</span>
+        <span class="text-white">is</span> 
+        <span>📦</span>
+        <span class="text-red">v1.0.0</span>
+        <span class="text-white">via</span>
+        <span class="text-green">⬢ v18.4.0</span>
+        <span class="text-white">took</span>
+        <span class="text-yellow">7s</span>
+    </div>
+</div>
+
+so instead I use the prompt as breadcrumbs to (_hopefully_) help with navigation
+
+<div class="not-prose">
+    <TerminalCommand command="echo 'example'" />
+</div>
+
+like ☝️ that.
+
+#### ls -lah .
+
+I also removed the current directory from the `ls -lah .` commands
+
+<div class="not-prose font-mono">
+    <TerminalCommand command="ls -lah ." />
+    <div class="mt--4">
+        <LsResult type="directory" updated={meta.lastUpdated}>.&nbsp; # this line got removed</LsResult>
+    </div>
+    <div>
+        <LsResult type="directory" updated={meta.lastUpdated}>..</LsResult>
+    </div>
+</div>
+
+that are used as navigation at the top of each page.
+
+It made the commands look more authentic but for readers who don't use console terminals it 
+was confusing and for navigation it was pointless.
+
+##### ls -laht .
+
+The `ls -laht .` command from the [posts](/blog/posts) and [tags](/blog/tags) pages was also adjusted. 
+
+If you'd already noticed that then you're a **nerd**.
+
+export const newDate = new Date(meta.lastUpdated)
+export const directoryDate = new Date(new Date(newDate).setDate(newDate.getDate() - 1))
+export const oldDate = new Date(new Date(newDate).setDate(newDate.getDate() - 2))
+
+<div class="not-prose font-mono">
+    <TerminalCommand class="mt-2" command="ls -laht ." />
+    <LsResult class="mt--4" type="directory" updated={newDate}>latest post</LsResult>
+    <LsResult type="directory" updated={directoryDate}>..</LsResult>
+    <LsResult type="directory" updated={oldDate}>an older post</LsResult>
+</div>
+
+Normally the parent directory `..` would also be sorted (like above) but I've kept it at the top 
+for consistency with the rest of the "navigation" across the site.
+
+## Hacks
+
+### Tags
+
+îles doesn't natively come with tags but it was easy to add some in.
+
+I've used the [dynamic routes](https://iles-docs.netlify.app/guide/routing#dynamic-routes) 
+feature and made a file called `src/pages/blog/tags/[id].vue` to create a page for each tag 
+and a `src/pages/blog/tags/index.vue` file to create a page that lists all the tags.
+
+The logic used to get the tags looks like this:
+
+```ts
+export function tagPages () {
+    const tags: TagPage[] = []
+    usePosts().value.forEach((post => {
+        post.frontmatter.tags?.forEach((tag: string) => {
+            const existingTagPage = tags.find((page) => page.params.id === tag);
+            if (existingTagPage) {
+                if (post.frontmatter.date > existingTagPage.updated) {
+                    existingTagPage.updated = post.frontmatter.date
+                }
+                existingTagPage.props.posts.push(post)
+            } else {
+                tags.push({
+                    params: {
+                        id: tag
+                    },
+                    props: {
+                        id: tag,
+                        posts: [{
+                            frontmatter: post.frontmatter,
+                            meta: post.meta,
+                            href: post.href
+                        } as Post]
+                    },
+                    updated: post.frontmatter.date
+                })
+            }
+        })
+    }))
+
+    return tags
+}
+```
+
+On the `[id].vue` page I use it with `getStaticPaths`: 
+
+```ts
+export default definePageComponent({
+    getStaticPaths: () => tagPages()
+})
+```
+
+and îles makes a page for each tag.
+
+On the `index.vue` page I can loop through them to make links:
+
+```vue
+<li v-for="tag in tagPages().sort(byName)">
+    <router-link :to="`/blog/tags/${tag.params.id}`">
+        {{ tag.params.id }}
+    </router-link>
+</li>
+```
+
+### Prism
+
+[Prism](https://prismjs.com/) is used to automatically style the code blocks and the [îles Prism](https://github.com/ElMassimo/iles/tree/main/packages/prism) 
+package [suggests some CSS](https://github.com/ElMassimo/iles/tree/main/packages/prism#styling-) 
+to make sure things line up.
+
+I had to add a few more adjustments to get it to work with the Dracula theme:
+
+```css
+
+/* resets code line height */
+code[class*='language-'],
+pre[class*='language-'] {
+  line-height: 1.75;
+}
+
+/* fixes line numbers */
+div[class*='language-'].line-numbers-mode pre[class*='language-'] {
+  padding-left: 4rem; 
+}
+
+/* fixes line-highlight padding */
+div[class*='language-'] pre.line-highlight {
+  padding: 1rem 0; 
+}
+```
+
+```txt {2} showLineNumbers
+so I can highlight
+this line
+and not
+these ones
+```
+
+
+I also set the colours used when writing a diff:
+
+```css
+.token .token {
+  color: inherit;
+}
+
+.token.deleted {
+  --at-apply: text-red;
+}
+
+.token.inserted {
+  --at-apply: text-green;
+}
+```
+
+```diff
+    before (all lines would be pink)
+-   after (deleted is now Marcelin)
++   after (inserted is now Blade)
+```
+
+### Importing Dracula colours
+
+I'll come clean and admit that importing the Dracula colours also involved telling 
+TypeScript about the types that the plugin uses.
+
+This was more about getting rid of an error message than actually using the information 
+for something useful.
+
+I had to create a `@types/tailwind-dracula-colors/index.d.ts` file that contained:
+
+```ts
+declare module 'tailwind-dracula/colors' {
+    interface Colors {
+        [string: string]: string[]
+    }
+    
+    export function colors(): Colors
+}
+```
+
+and update my `tsconfig.json` to include it:
+
+```json
+"typeRoots": [
+    "./node_modules/@types/", 
+    ".src/@types"
+]
+```
+
+and now there's one less error message in the world.
+
+## View Source
+
+We'll see how long it stays like this.
+
+You can view the code [here](https://github.com/ptibbetts/blog).
