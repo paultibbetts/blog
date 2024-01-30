@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { dateFormat } from '~/logic/date'
+import { dateFormat, dateLocale } from '~/logic/date'
 const FILE = 'file'
 const DIRECTORY = 'directory'
 
@@ -14,8 +14,7 @@ defineProps<{
 <template>
 <div text-sm>
     <span>
-        {{ type === DIRECTORY ? 'd' : '-' }}r-{{ executable ? 'x' : '-' }}r-{{ executable ? 'x' : '-' }}r-{{ executable ? 'x' : '-'}} paul tibbetts {{ updated.toLocaleString('en-US', dateFormat).replaceAll(',', '') }}
-
+        {{ type === DIRECTORY ? 'd' : '-' }}r-{{ executable ? 'x' : '-' }}r-{{ executable ? 'x' : '-' }}r-{{ executable ? 'x' : '-'}} paul tibbetts {{ updated.toLocaleString(dateLocale, dateFormat).replaceAll(',', '') }}
         <span 
             v-if="color"
             :class="color"

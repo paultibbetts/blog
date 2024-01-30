@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import postsPage from '~/pages/blog/posts/index.vue'
+import { format } from '~/logic/date'
 </script>
 
 <template layout="default">
@@ -29,7 +30,7 @@ import postsPage from '~/pages/blog/posts/index.vue'
                 <div>
                     <span class="text-cyan">date</span>
                     <span class="text-pink">: </span>
-                    <span class="text-orange">{{ $frontmatter.date }}</span>
+                    <span class="text-orange">{{ format($frontmatter.date) }}</span>
                 </div>
                 <div v-if="$frontmatter.tags">
                     <span class="text-cyan">tags</span>

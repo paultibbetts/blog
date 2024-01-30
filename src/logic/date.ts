@@ -8,3 +8,9 @@ export const dateFormat: Intl.DateTimeFormatOptions = {
     second: undefined,
     hour12: false,
 }
+
+export const dateLocale: Intl.UnicodeBCP47LocaleIdentifier = 'en-US'
+
+export const format = (date: Date): string => {
+    return date.toISOString().split('T')[0].replaceAll('-', '/')
+}
