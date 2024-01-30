@@ -22,13 +22,19 @@ import { dateFormat, dateLocale } from '~/logic/date'
       type="file"
       executable
       :updated="$meta.lastUpdated" 
-      color="text-white"
     >
-      hello.sh
+      <a
+        href="#greeting.sh"
+      >
+        greeting.sh
+      </a>
     </LsResult>
   </TerminalCommand>
 </nav>
-<TerminalCommand command="./hello.sh">
+<TerminalCommand
+  command="./greeting.sh"
+  id="greeting.sh"
+>
   <hello mt-2/>
 </TerminalCommand>
 <TerminalCommand command="whoami">

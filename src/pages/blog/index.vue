@@ -66,7 +66,7 @@ const mostRecentPost = usePosts().value.sort(sortPostsByDate)[0]
   id="description"
 >
   <div text-white>
-    Words about tech.
+    Ramblings of a DevOps Engineer.
   </div>
 </TerminalCommand>
 
