@@ -15,16 +15,16 @@ import postsPage from '~/pages/blog/posts/index.vue'
         </TerminalCommand>
     </nav>
 
-    <div>
+    <main>
         <TerminalCommand command="cat index.md">
             <div mb-4>
                 <div>
                     ---
                 </div>
-                <div>
+                <div >
                     <span class="text-cyan">title</span>
                     <span class="text-pink">: </span>
-                    <span class="text-yellow">{{ $frontmatter.title }}</span>
+                    <h1 class="inline font-bold text-yellow">{{ $frontmatter.title }}</h1>
                 </div>
                 <div>
                     <span class="text-cyan">date</span>
@@ -54,6 +54,6 @@ import postsPage from '~/pages/blog/posts/index.vue'
                 <slot />
             </div>
         </TerminalCommand>
-    </div>
+    </main>
 </div>
 </template>

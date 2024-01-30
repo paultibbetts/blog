@@ -1,6 +1,10 @@
+/* smooth scrolling */
+
 html {
   scroll-behavior: smooth;
 }
+
+/* body */
 
 body {
   --at-apply: bg-night p-4 font-mono text-gray-400;
@@ -8,13 +12,44 @@ body {
 
 body {
   line-height: 1.6;
-  transition: color 0.5s, background-color 0.5s;
+  transition: color 0.3s, background-color 0.3s;
 }
 
-body a {
+/* links */
+
+a {
   --at-apply: text-purple-200 no-underline;
 }
 
-body a:hover {
+a:hover {
   text-decoration: underline;
+}
+
+span a {
+  color: inherit;
+}
+
+/* prose links */
+
+.prose a:not(.prose .not-prose a) {
+  --at-apply: text-purple-200;
+}
+
+/* prose code */
+
+.prose code:not(.prose pre code) {
+  --at-apply: font-mono text-green;
+  white-space: normal; /* override `pre` where it would not wrap long lines */
+}
+
+/* block quotes */
+
+blockquote {
+  --at-apply: text-yellow;
+}
+
+blockquote::before {
+  content: ">";
+  position: absolute;
+  left: 1rem;
 }

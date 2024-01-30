@@ -27,7 +27,6 @@ const mostRecentPost = usePosts().value.sort(sortPostsByDate)[0]
     >
       <a 
         href="#description"
-        text-white
       >
         description.txt
       </a>
@@ -39,7 +38,6 @@ const mostRecentPost = usePosts().value.sort(sortPostsByDate)[0]
     >
       <a
         href="#most-recent-post"
-        text-white
       >
         most-recent-post.sh
       </a>

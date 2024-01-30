@@ -23,7 +23,18 @@ defineProps<{
             <slot />
         </span>
         <template v-else>
-            <slot />
+            <span
+                v-if="type === FILE"
+                text-white
+            >
+                <slot />
+            </span>
+            <span
+                v-else
+                text-purple-200
+            >
+                <slot />
+            </span>
 
         </template>
     </span>
