@@ -49,7 +49,5 @@ export function tagPages () {
 }
 
 export const sortTagPagesByName = (a: TagPage, b: TagPage) => {
-    return a.params.id > b.params.id 
-        ? 1 
-        : -1
+    return a.params.id > b.params.id ? 1 : -1
 }
