@@ -18,6 +18,7 @@ const breadcrumbify = (path: string): {label: string, path: string}[] => {
     })
 }
 
+const breadcrumbs = breadcrumbify(useRoute().path)
 </script>
 
 <template>
@@ -25,9 +26,9 @@ const breadcrumbify = (path: string): {label: string, path: string}[] => {
     <div>
         <span><router-link to="/" text-cyan>~</router-link>
             <span
-                v-for="(breadcrumb, index) in breadcrumbify($route.path)"
+                v-for="(breadcrumb, index) in breadcrumbs"
                 text-cyan
-            ><template v-if="index !== breadcrumbify($route.path).length - 1">/<router-link
+            ><template v-if="index !== breadcrumbs.length - 1">/<router-link
                         :to="breadcrumb.path"
                         text-cyan
                     >{{ breadcrumb.label }}</router-link>
