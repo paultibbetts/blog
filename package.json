@@ -27,5 +27,9 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.3.0"
+  },
+  "overrides": {
+    "vue": "3.3",
+    "vite": "4.4"
   }
 }
