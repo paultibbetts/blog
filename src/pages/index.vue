@@ -11,12 +11,14 @@ import { dateFormat, dateLocale } from '~/logic/date'
     ..
     </div>
     <LsResult
-      type="directory"
-      :updated="blogPage.lastUpdated"
+      type="file"
+      :updated="$meta.lastUpdated"
     >
-      <router-link to="/blog">
-        blog
-      </router-link>
+      <a
+        href="#about.txt"
+      >
+        about.txt
+      </a>
     </LsResult>
     <LsResult
       type="file"
@@ -29,6 +31,16 @@ import { dateFormat, dateLocale } from '~/logic/date'
         greeting.sh
       </a>
     </LsResult>
+    <LsResult
+      type="directory"
+      :updated="$meta.lastUpdated"
+    >
+      <a
+        href="#links"
+      >
+        links
+      </a>
+    </LsResult>
   </TerminalCommand>
 </nav>
 <TerminalCommand
@@ -37,10 +49,19 @@ import { dateFormat, dateLocale } from '~/logic/date'
 >
   <hello mt-2/>
 </TerminalCommand>
-<TerminalCommand command="whoami">
+<TerminalCommand
+  command="cat about.txt"
+  id="about.txt"
+>
   <div class="prose text-white">
-    <p>I'm Paul.</p>
-    <p>You've found my <router-link to="blog">blog</router-link>.</p>
+    <p>I'm Paul, a DevOps Engineer.</p>
   </div>
+</TerminalCommand>
+<TerminalCommand
+  command="ls links"
+  id="links"
+>
+    <a href="https://paultibbetts.micro.blog">blog</a>&nbsp;
+    <a href="https://github.com/ptibbetts">github</a>
 </TerminalCommand>
 </template>
