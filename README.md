@@ -2,6 +2,10 @@
 
 My blog built on [îles](https://github.com/ElMassimo/iles).
 
+I'm in the middle of deciding what I want to do with it - for now it's just a landing page.
+
+I'll be blogging at [micro.blog](https://paultibbetts.micro.blog) in the meantime.
+
 ## Project Setup
 
 ```sh
