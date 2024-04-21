@@ -61,7 +61,7 @@ import { dateFormat, dateLocale } from '~/logic/date'
   command="ls links"
   id="links"
 >
-    <a href="https://paultibbetts.micro.blog">blog</a>&nbsp;
-    <a href="https://github.com/ptibbetts">github</a>
+    <a class="text-purple-200 no-underline" href="https://paultibbetts.micro.blog">blog</a>&nbsp;
+    <a class="text-purple-200 no-underline" href="https://github.com/paultibbetts">github</a>
 </TerminalCommand>
 </template>
